@@ -25,10 +25,7 @@ export default defineConfig([
 
   {
     files: ['**/*.{ts,tsx}'],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommended,
-    ],
+    extends: [js.configs.recommended, tseslint.configs.recommended],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
@@ -85,10 +82,7 @@ export default defineConfig([
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
 
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     },
   },
 
@@ -166,7 +160,7 @@ export default defineConfig([
       '@typescript-eslint/prefer-as-const': 'error',
       '@typescript-eslint/prefer-optional-chain': 'warn',
       '@typescript-eslint/prefer-nullish-coalescing': 'warn',
-      
+
       '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
       '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
       '@typescript-eslint/consistent-type-imports': [
@@ -186,27 +180,27 @@ export default defineConfig([
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'no-debugger': 'error',
       'no-alert': 'error',
-      
+
       'no-var': 'error',
       'prefer-const': 'error',
       'prefer-template': 'error',
       'object-shorthand': 'error',
       'quote-props': ['error', 'as-needed'],
-      
+
       'dot-notation': 'error',
       'no-multi-assign': 'error',
       'no-nested-ternary': 'warn',
       'no-unneeded-ternary': 'error',
       'no-duplicate-imports': 'error',
-      
+
       'spaced-comment': ['error', 'always', { markers: ['/'] }],
-      'curly': ['error', 'all'],
+      curly: ['error', 'all'],
       'brace-style': ['error', '1tbs', { allowSingleLine: false }],
     },
   },
 
   {
-    files: ['*.config.{js,ts}', '.*rc.{js,json}', '*.setup.{js,ts}'],
+    files: ['*.config.{js,ts}', '.*rc.{js,ts}', '*.setup.{js,ts}'],
     languageOptions: {
       globals: {
         ...globals.node,
