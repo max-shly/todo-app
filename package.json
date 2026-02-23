@@ -8,8 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css}\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,less}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,less}\"",
     "preview": "vite preview",
     "prepare": "husky"
   },

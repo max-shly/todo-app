@@ -6,7 +6,19 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import prettierPlugin from 'eslint-plugin-prettier';
 import eslintConfigPrettier from 'eslint-config-prettier';
-import prettierConfig from './.prettierrc' assert { type: 'json' };
+
+const prettierConfig = {
+  semi: true,
+  singleQuote: true,
+  tabWidth: 2,
+  trailingComma: 'es5',
+  printWidth: 100,
+  bracketSpacing: true,
+  arrowParens: 'always',
+  endOfLine: 'lf',
+  jsxSingleQuote: false,
+  jsxBracketSameLine: false
+};
 
 export default defineConfig([
   globalIgnores(['dist']),
