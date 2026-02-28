@@ -1,0 +1,22 @@
+# Зависимости
+node_modules
+package-lock.json
+
+# Сборка
+dist
+build
+coverage
+.env
+
+# Конфиги
+.eslintrc.js
+.prettierrc
+.prettierignore
+
+# Git
+.git
+.gitignore
+.husky
+
+# Логи
+*.log
