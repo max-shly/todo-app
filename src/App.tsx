@@ -1,3 +1,5 @@
+import './styles/global.less';
+
 function App() {
   return <></>;
 }
