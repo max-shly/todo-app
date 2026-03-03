@@ -1,4 +1,4 @@
-import { type TodosState, type TodosAction } from '../../types/index.ts';
+import { type TodosState, type TodosAction } from '../types/index.ts';
 
 export const initialState: TodosState = {
   todos: [],
