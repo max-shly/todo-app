@@ -10,7 +10,7 @@ export interface Todo {
 }
 
 export interface ApiResponse<T> {
-  data: T | null;
+  data: T;
   error: string | null;
 }
 
@@ -22,6 +22,6 @@ export interface TodosState {
 
 export type TodosAction =
   | { type: 'FETCH_START' }
-  | { type: 'FETCH_SUCCESS'; payload: Todo[] }
-  | { type: 'FETCH_ERROR'; payload: string }
-  | { type: 'SET_TODOS'; payload: Todo[] };
+  | { type: 'FETCH_SUCCESS'; payload: { todos: Todo[] } }
+  | { type: 'FETCH_ERROR'; payload: { error: string } }
+  | { type: 'SET_TODOS'; payload: { todos: Todo[] } };
