@@ -18,7 +18,7 @@ export function todosReducer(state: TodosState, action: TodosAction) {
     case 'FETCH_SUCCESS': {
       return {
         ...state,
-        todos: action.payload,
+        todos: action.payload.todos,
         isLoading: false,
         error: null,
       };
@@ -26,15 +26,14 @@ export function todosReducer(state: TodosState, action: TodosAction) {
     case 'FETCH_ERROR': {
       return {
         ...state,
-        todos: [],
         isLoading: false,
-        error: action.payload,
+        error: action.payload.error,
       };
     }
     case 'SET_TODOS': {
       return {
         ...state,
-        todos: action.payload,
+        todos: action.payload.todos,
         isLoading: false,
         error: null,
       };

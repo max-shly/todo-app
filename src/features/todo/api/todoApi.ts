@@ -30,7 +30,7 @@ class TodoApi {
 
       return { data: newTodos, error: null };
     } catch (error) {
-      return { data: null, error: `Operation failed: ${error}` };
+      return { data: [], error: `Operation failed: ${error}` };
     }
   }
 
@@ -39,7 +39,7 @@ class TodoApi {
       const todos = this.readFromStorage();
       return { data: todos, error: null };
     } catch (error) {
-      return { data: null, error: `Failed to fetch todos: ${error}` };
+      return { data: [], error: `Failed to fetch todos: ${error}` };
     }
   }
 
