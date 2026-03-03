@@ -17,20 +17,19 @@ class TodoApi {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
   }
 
-  protected async executeWithStorage(
-    operation: (todos: Todo[]) => Todo[]
-  ): Promise<ApiResponse<Todo[]>> {
+  protected async executeWithStorage<R>(
+    operation: (todos: Todo[]) => { newTodos: Todo[]; result: R }
+  ): Promise<ApiResponse<R>> {
     try {
       const todos = this.readFromStorage();
-      const newTodos = operation(todos);
 
-      if (newTodos !== todos) {
-        this.writeToStorage(newTodos);
-      }
+      const { newTodos, result } = operation(todos);
 
-      return { data: newTodos, error: null };
+      this.writeToStorage(newTodos);
+
+      return { data: result, error: null };
     } catch (error) {
-      return { data: [], error: `Operation failed: ${error}` };
+      return { data: null, error: `Operation failed: ${error}` };
     }
   }
 
@@ -39,64 +38,22 @@ class TodoApi {
       const todos = this.readFromStorage();
       return { data: todos, error: null };
     } catch (error) {
-      return { data: [], error: `Failed to fetch todos: ${error}` };
+      return { data: null, error: `Failed to fetch todos: ${error}` };
     }
   }
 
   async createTodo(
     todoData: Omit<Todo, 'id' | 'createdAt' | 'updatedAt'>
-  ): Promise<ApiResponse<Todo[]>> {
-    const result = this.executeWithStorage((todos) => {
+  ): Promise<ApiResponse<Todo>> {
+    return this.executeWithStorage((todos) => {
       const newTodo: Todo = {
         id: crypto.randomUUID(),
         ...todoData,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
-
-      return [...todos, newTodo];
+      return { newTodos: [...todos, newTodo], result: newTodo };
     });
-
-    return result;
-  }
-
-  async updateTodo(todoData: Omit<Todo, 'updatedAt'>): Promise<ApiResponse<Todo[]>> {
-    const result = this.executeWithStorage((todos) => {
-      const newTodos = todos.map((todo) => {
-        if (todo.id === todoData.id) {
-          return {
-            ...todoData,
-            updatedAt: new Date().toISOString(),
-          };
-        } else {
-          return todo;
-        }
-      });
-
-      return newTodos;
-    });
-
-    return result;
-  }
-
-  async deleteTodo(todoId: string): Promise<ApiResponse<Todo[]>> {
-    const result = this.executeWithStorage((todos) => todos.filter((todo) => todo.id !== todoId));
-
-    return result;
-  }
-
-  async deleteAllTodos(): Promise<ApiResponse<Todo[]>> {
-    const result = this.executeWithStorage(() => []);
-
-    return result;
-  }
-
-  async deleteCompletedTodos(): Promise<ApiResponse<Todo[]>> {
-    const result = this.executeWithStorage((todos) =>
-      todos.filter((todo) => todo.status === 'complete')
-    );
-
-    return result;
   }
 }
 
