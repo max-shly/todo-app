@@ -1,4 +1,4 @@
-import { useReducer, useEffect } from 'react';
+import { useReducer, useEffect, useCallback } from 'react';
 
 import toast from 'react-hot-toast';
 
@@ -28,7 +28,7 @@ export function useTodos() {
     loadTodos();
   }, []);
 
-  const addTodo = async (todo: Omit<Todo, 'id' | 'createdAt' | 'updatedAt'>) => {
+  const addTodo = useCallback(async (todo: Omit<Todo, 'id' | 'createdAt' | 'updatedAt'>) => {
     const { data, error } = await todoApi.createTodo(todo);
 
     if (error) {
@@ -38,7 +38,7 @@ export function useTodos() {
 
     dispatch({ type: 'SET_TODOS', payload: { todos: data } });
     toast.success('Todo added!');
-  };
+  }, []);
 
   return { state, addTodo };
 }
