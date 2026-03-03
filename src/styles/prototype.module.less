@@ -1,0 +1,16 @@
+.prototype {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    'header'
+    'main';
+  min-height: 100vh;
+
+  & > header {
+    grid-area: 'header';
+  }
+
+  & > main {
+    grid-area: 'main';
+  }
+}
