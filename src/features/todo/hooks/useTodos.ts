@@ -19,6 +19,13 @@ export function useTodos() {
       if (error) {
         dispatch({ type: 'FETCH_ERROR', payload: { error } });
         toast.error(error);
+        return;
+      }
+
+      if (!data) {
+        dispatch({ type: 'FETCH_ERROR', payload: { error: 'No data' } });
+        toast.error('No data returned');
+        return;
       }
 
       dispatch({ type: 'FETCH_SUCCESS', payload: { todos: data } });
@@ -32,11 +39,16 @@ export function useTodos() {
     const { data, error } = await todoApi.createTodo(todo);
 
     if (error) {
-      dispatch({ type: 'FETCH_ERROR', payload: { error } });
       toast.error(error);
+      return;
     }
 
-    dispatch({ type: 'SET_TODOS', payload: { todos: data } });
+    if (!data) {
+      toast.error('No data returned');
+      return;
+    }
+
+    dispatch({ type: 'ADD_TODO', payload: { todo: data } });
     toast.success('Todo added!');
   }, []);
 
