@@ -1,5 +1,5 @@
-import { AppHeader } from './components/AppHeader/AppHeader';
-import { AppMain } from './components/AppMain/AppMain';
+import { AppHeader } from './layouts/AppHeader/AppHeader';
+import { AppMain } from './layouts/AppMain/AppMain';
 import './styles/global.less';
 import styles from './styles/prototype.module.less';
 
