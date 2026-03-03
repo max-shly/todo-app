@@ -38,5 +38,13 @@ export function todosReducer(state: TodosState, action: TodosAction) {
         error: null,
       };
     }
+    case 'ADD_TODO': {
+      return {
+        ...state,
+        todos: [...state.todos, action.payload.todo],
+        isLoading: false,
+        error: null,
+      };
+    }
   }
 }
