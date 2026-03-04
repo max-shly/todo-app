@@ -9,7 +9,14 @@ import { TodoModal } from '../TodoModal/TodoModal';
 import styles from './TodoContainer.module.less';
 
 export function TodoContainer() {
-  const { state: todosState, addTodo, updateTodo, toggleTodoStatus, deleteTodo } = useTodos();
+  const {
+    state: todosState,
+    addTodo,
+    updateTodo,
+    toggleTodoStatus,
+    deleteTodo,
+    deleteAllTodos,
+  } = useTodos();
   const { isOpen: isOpenModal, editingTodo, open: openModal, close: closeModal } = useTodoModal();
 
   const handleSave = (data: { title: string; date: string }) => {
@@ -27,7 +34,7 @@ export function TodoContainer() {
       <section className={styles.container}>
         <TodoHeader
           onAddTodo={openModal}
-          onDeleteAllTodos={() => {}}
+          onDeleteAllTodos={deleteAllTodos}
           hasTodos={todosState.todos.length > 0}
         />
         <div className={styles.body}>
