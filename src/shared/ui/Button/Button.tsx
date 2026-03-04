@@ -13,7 +13,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <button
-      type={type === 'submit' ? 'submit' : 'button'}
+      type={type}
       className={`${styles.btn} ${styles[`btn--${variant}`]} ${className}`}
       {...props}
     >

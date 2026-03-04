@@ -54,7 +54,7 @@ export function TodoContainer() {
               onClick={deleteCompletedTodos}
               disabled={!todosState.todos.some((todo) => todo.status === 'complete')}
             >
-              Delete comleted Todos
+              Delete completed Todos
             </Button>
           </div>
           <TodoList
