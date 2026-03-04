@@ -55,6 +55,24 @@ class TodoApi {
       return { newTodos: [...todos, newTodo], result: newTodo };
     });
   }
+
+  async updateTodo(id: string, todoUpdates: Partial<Todo>): Promise<ApiResponse<Todo>> {
+    return this.executeWithStorage((todos) => {
+      const index = todos.findIndex((todo) => todo.id === id);
+      if (index === -1) throw new Error('Todo not found');
+
+      const updated = {
+        ...todos[index],
+        ...todoUpdates,
+        updatedAt: new Date().toISOString(),
+      };
+
+      const newTodos = [...todos];
+      newTodos[index] = updated;
+
+      return { newTodos, result: updated };
+    });
+  }
 }
 
 export const todoApi = new TodoApi();

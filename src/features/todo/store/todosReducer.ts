@@ -46,5 +46,13 @@ export function todosReducer(state: TodosState, action: TodosAction) {
         error: null,
       };
     }
+    case 'UPDATE_TODO': {
+      return {
+        ...state,
+        todos: state.todos.map((todo) =>
+          todo.id === action.payload.todo.id ? action.payload.todo : todo
+        ),
+      };
+    }
   }
 }
