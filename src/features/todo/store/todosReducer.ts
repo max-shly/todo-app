@@ -54,5 +54,16 @@ export function todosReducer(state: TodosState, action: TodosAction) {
         ),
       };
     }
+    case 'DELETE_TODO': {
+      return {
+        ...state,
+        todos: state.todos.filter((todo) => todo.id !== action.payload.id),
+      };
+    }
+    default: {
+      return {
+        ...state,
+      };
+    }
   }
 }

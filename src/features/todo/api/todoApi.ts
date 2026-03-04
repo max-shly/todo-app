@@ -73,6 +73,17 @@ class TodoApi {
       return { newTodos, result: updated };
     });
   }
+
+  async deleteTodo(id: string): Promise<ApiResponse<string>> {
+    return this.executeWithStorage((todos) => {
+      const index = todos.findIndex((todo) => todo.id === id);
+      if (index === -1) throw new Error('Todo not found');
+
+      const newTodos = todos.filter((todo) => todo.id !== id);
+
+      return { newTodos, result: id };
+    });
+  }
 }
 
 export const todoApi = new TodoApi();
