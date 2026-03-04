@@ -90,6 +90,14 @@ class TodoApi {
       return { newTodos: [], result: [] };
     });
   }
+
+  async deleteCompletedTodos(): Promise<ApiResponse<Todo[]>> {
+    return this.executeWithStorage((todos) => {
+      const newTodos = todos.filter((todo) => todo.status !== 'complete');
+
+      return { newTodos, result: newTodos };
+    });
+  }
 }
 
 export const todoApi = new TodoApi();
