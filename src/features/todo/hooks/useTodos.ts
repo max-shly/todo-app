@@ -81,5 +81,24 @@ export function useTodos() {
     [updateTodo]
   );
 
-  return { state, addTodo, updateTodo, toggleTodoStatus };
+  const deleteTodo = useCallback(async (id: string) => {
+    const { data, error } = await todoApi.deleteTodo(id);
+
+    console.log(data);
+
+    if (error) {
+      toast.error(error);
+      return;
+    }
+
+    if (!data) {
+      toast.error('No data returned');
+      return;
+    }
+
+    dispatch({ type: 'DELETE_TODO', payload: { id } });
+    toast.success('Todo deleted!');
+  }, []);
+
+  return { state, addTodo, updateTodo, toggleTodoStatus, deleteTodo };
 }
