@@ -1,3 +1,5 @@
+import { useId } from 'react';
+
 import styles from './Select.module.less';
 
 export interface SelectOption {
