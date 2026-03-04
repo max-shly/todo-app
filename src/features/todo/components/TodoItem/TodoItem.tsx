@@ -19,9 +19,7 @@ export function TodoItem({ todo, onEditTodo, onChangeTodoStatus, onDeleteTodo }:
       <input
         type="checkbox"
         title="Click for change status"
-        onChange={() => {
-          onChangeTodoStatus({ ...todo, status: checked ? 'incomplete' : 'complete' });
-        }}
+        onChange={() => onChangeTodoStatus(todo)}
         checked={checked}
       />
 

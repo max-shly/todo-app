@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { todoApi } from '../api/todoApi';
 import { todosReducer, initialState } from '../store/todosReducer';
 
-import type { Todo } from '../types';
+import type { Todo, TodoStatus } from '../types';
 
 export function useTodos() {
   const [state, dispatch] = useReducer(todosReducer, initialState);
@@ -69,5 +69,17 @@ export function useTodos() {
     toast.success('Todo updated!');
   }, []);
 
-  return { state, addTodo, updateTodo };
+  const toggleTodoStatus = useCallback(
+    (todo: Todo) => {
+      const toggled = {
+        ...todo,
+        status: (todo.status === 'complete' ? 'incomplete' : 'complete') as TodoStatus,
+      };
+
+      updateTodo(toggled);
+    },
+    [updateTodo]
+  );
+
+  return { state, addTodo, updateTodo, toggleTodoStatus };
 }
