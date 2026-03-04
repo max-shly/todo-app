@@ -52,5 +52,22 @@ export function useTodos() {
     toast.success('Todo added!');
   }, []);
 
-  return { state, addTodo };
+  const updateTodo = useCallback(async (todo: Todo) => {
+    const { data, error } = await todoApi.updateTodo(todo.id, todo);
+
+    if (error) {
+      toast.error(error);
+      return;
+    }
+
+    if (!data) {
+      toast.error('No data returned');
+      return;
+    }
+
+    dispatch({ type: 'UPDATE_TODO', payload: { todo: data } });
+    toast.success('Todo updated!');
+  }, []);
+
+  return { state, addTodo, updateTodo };
 }

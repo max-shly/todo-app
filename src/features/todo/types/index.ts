@@ -25,4 +25,5 @@ export type TodosAction =
   | { type: 'FETCH_SUCCESS'; payload: { todos: Todo[] } }
   | { type: 'FETCH_ERROR'; payload: { error: string } }
   | { type: 'SET_TODOS'; payload: { todos: Todo[] } }
-  | { type: 'ADD_TODO'; payload: { todo: Todo } };
+  | { type: 'ADD_TODO'; payload: { todo: Todo } }
+  | { type: 'UPDATE_TODO'; payload: { todo: Todo } };
