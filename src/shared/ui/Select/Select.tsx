@@ -25,14 +25,27 @@ export function Select({
   className = '',
   ...props
 }: SelectProps) {
+  const generatedId = useId();
+  const selectId = id ?? generatedId;
+
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onChange?.(e.target.value);
   };
 
   return (
     <div className={`${styles.wrapper} ${error ? styles.error : ''} ${className}`}>
-      {label && <label className={styles.label}>{label}</label>}
-      <select id={id} value={value} className={styles.select} onChange={handleChange} {...props}>
+      {label && (
+        <label htmlFor={selectId} className={styles.label}>
+          {label}
+        </label>
+      )}
+      <select
+        id={selectId}
+        value={value}
+        className={styles.select}
+        onChange={handleChange}
+        {...props}
+      >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
