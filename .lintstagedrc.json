@@ -1,0 +1,9 @@
+{
+  "src/**/*.{ts,tsx,js,jsx}": [
+    "prettier --write --log-level=debug",
+    "eslint --fix --debug"
+  ],
+  "src/**/*.{json,css,less}": [
+    "prettier --write --log-level=debug"
+  ]
+}

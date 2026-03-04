@@ -1,0 +1,52 @@
+@import './variables.less';
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary-color: @primary-color;
+  --primary-color-hover: @primary-color-hover;
+
+  --secondary-color: @secondary-color;
+  --secondary-color-hover: @secondary-color-hover;
+
+  --success-color: @success-color;
+  --success-color-hover: @success-color-hover;
+
+  --danger-color: @danger-color;
+  --danger-color-hover: @danger-color-hover;
+
+  --warning-color: @warning-color;
+  --primary-color: @primary-color;
+
+  --info-color: @info-color;
+  --white-color: @white-color;
+  --black-color: @black-color;
+  --dark-color: @dark-color;
+  --bg-color-1: @bg-color-1;
+  --bg-color-2: @bg-color-2;
+  --bg-color-3: @bg-color-3;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+
+  font-family: @font-family-base;
+  font-size: @font-size-base;
+  line-height: @line-height-base;
+
+  background-color: @bg-color-1;
+}
+
+.containerCentered {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}

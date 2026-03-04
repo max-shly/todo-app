@@ -1,0 +1,41 @@
+.item {
+  display: grid;
+  grid-template-columns: 25px 1fr 70px;
+  gap: 10px;
+  padding: 10px;
+
+  background-color: var(--white-color);
+  border-radius: 8px;
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5px;
+
+    overflow: hidden;
+
+    .title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    button {
+      min-width: 30px;
+      width: 30px;
+      height: 30px;
+      padding: 5px;
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
