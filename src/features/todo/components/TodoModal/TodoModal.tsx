@@ -12,7 +12,7 @@ export interface TodoModalProps {
   initialTodo?: { title: string; date: string } | null;
 }
 
-export default function TodoModal({ onClose, onSave, initialTodo }: TodoModalProps) {
+export function TodoModal({ onClose, onSave, initialTodo }: TodoModalProps) {
   const [title, setTitle] = useState(initialTodo?.title ?? '');
   const [date, setDate] = useState(initialTodo?.date ?? new Date().toISOString().split('T')[0]);
   const [errors, setErrors] = useState<{ title?: string }>({});
@@ -29,7 +29,7 @@ export default function TodoModal({ onClose, onSave, initialTodo }: TodoModalPro
   };
 
   return (
-    <Modal title={initialTodo ? 'Update TODO' : 'Add TODO'} onClose={() => {}}>
+    <Modal title={initialTodo ? 'Update TODO' : 'Add TODO'} onClose={onClose}>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formGroup}>
           <Input
