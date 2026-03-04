@@ -29,7 +29,6 @@ export function useTodos() {
       }
 
       dispatch({ type: 'FETCH_SUCCESS', payload: { todos: data } });
-      toast.success('Todos loaded!');
     };
 
     loadTodos();
