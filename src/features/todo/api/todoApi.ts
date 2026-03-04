@@ -84,6 +84,12 @@ class TodoApi {
       return { newTodos, result: id };
     });
   }
+
+  async deleteAllTodos(): Promise<ApiResponse<Todo[]>> {
+    return this.executeWithStorage(() => {
+      return { newTodos: [], result: [] };
+    });
+  }
 }
 
 export const todoApi = new TodoApi();
