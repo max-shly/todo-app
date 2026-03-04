@@ -16,6 +16,7 @@ export function TodoContainer() {
     toggleTodoStatus,
     deleteTodo,
     deleteAllTodos,
+    deleteCompletedTodos,
   } = useTodos();
   const { isOpen: isOpenModal, editingTodo, open: openModal, close: closeModal } = useTodoModal();
 
@@ -39,7 +40,11 @@ export function TodoContainer() {
         />
         <div className={styles.body}>
           <div className={styles.header}>
-            <Button variant="delete" onClick={() => {}} disabled={todosState.todos.length > 0}>
+            <Button
+              variant="delete"
+              onClick={deleteCompletedTodos}
+              disabled={!todosState.todos.some((todo) => todo.status === 'complete')}
+            >
               Delete comleted Todos
             </Button>
           </div>

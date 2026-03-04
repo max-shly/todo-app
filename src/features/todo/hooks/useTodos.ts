@@ -112,8 +112,33 @@ export function useTodos() {
     }
 
     dispatch({ type: 'SET_TODOS', payload: { todos: [] } });
-    toast.success('Todo deleted!');
+    toast.success('All todos deleted!');
   }, []);
 
-  return { state, addTodo, updateTodo, toggleTodoStatus, deleteTodo, deleteAllTodos };
+  const deleteCompletedTodos = useCallback(async () => {
+    const { data, error } = await todoApi.deleteCompletedTodos();
+
+    if (error) {
+      toast.error(error);
+      return;
+    }
+
+    if (!data) {
+      toast.error('No data returned');
+      return;
+    }
+
+    dispatch({ type: 'SET_TODOS', payload: { todos: data } });
+    toast.success('Completed todos deleted');
+  }, []);
+
+  return {
+    state,
+    addTodo,
+    updateTodo,
+    toggleTodoStatus,
+    deleteTodo,
+    deleteAllTodos,
+    deleteCompletedTodos,
+  };
 }
