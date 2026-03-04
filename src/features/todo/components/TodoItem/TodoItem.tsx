@@ -24,8 +24,10 @@ export function TodoItem({ todo, onEditTodo, onChangeTodoStatus, onDeleteTodo }:
       />
 
       <div className={styles.info}>
-        <div className={styles.title}>{todo?.title}</div>
-        <div className={styles.data}>{todo?.date}</div>
+        <div className={styles.title} title={todo.title}>
+          {todo.title}
+        </div>
+        <div className={styles.data}>{todo.date}</div>
       </div>
 
       <div className={styles.actions}>

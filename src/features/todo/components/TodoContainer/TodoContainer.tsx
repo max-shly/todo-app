@@ -11,6 +11,7 @@ import styles from './TodoContainer.module.less';
 export function TodoContainer() {
   const {
     state: todosState,
+
     addTodo,
     updateTodo,
     toggleTodoStatus,
@@ -29,6 +30,14 @@ export function TodoContainer() {
 
     closeModal();
   };
+
+  if (todosState.isLoading) {
+    return (
+      <section className={styles.container}>
+        <p>Loading....</p>
+      </section>
+    );
+  }
 
   return (
     <>
