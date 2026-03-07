@@ -1,13 +1,11 @@
-import { TodoContainer } from '@/features/todo/components/TodoContainer/TodoContainer';
+import { Outlet } from 'react-router-dom';
 
 import styles from './AppMain.module.less';
 
 export function AppMain() {
   return (
     <main className={styles.main}>
-      <div className="containerCentered">
-        <TodoContainer />
-      </div>
+      <Outlet />
     </main>
   );
 }
