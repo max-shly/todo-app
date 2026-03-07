@@ -1,3 +1,11 @@
+import { TodoContainer } from '@/features/todo/components';
+
 export function TodoPage() {
-  return <></>;
+  return (
+    <>
+      <div className="containerCentered">
+        <TodoContainer />
+      </div>
+    </>
+  );
 }
