@@ -1,10 +1,8 @@
 import { Button } from '@/shared/ui';
 
+import { TodoHeader, TodoList, TodoModal } from '..';
 import { useTodoModal } from '../../hooks/useTodoModal';
 import { useTodos } from '../../hooks/useTodos';
-import { TodoHeader } from '../TodoHeader/TodoHeader';
-import { TodoList } from '../TodoList/TodoList';
-import { TodoModal } from '../TodoModal/TodoModal';
 
 import styles from './TodoContainer.module.less';
 
