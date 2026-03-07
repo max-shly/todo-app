@@ -1,8 +1,6 @@
 import { useState, type SubmitEvent } from 'react';
 
-import { Button } from '@/shared/ui/Button/Button.js';
-import { Input } from '@/shared/ui/Input/Input.js';
-import { Modal } from '@/shared/ui/Modal/Modal.js';
+import { Button, Input, Modal } from '@/shared/ui';
 
 import styles from './TodoModal.module.less';
 
