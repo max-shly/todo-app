@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import { createPortal } from 'react-dom';
 
-import { Button } from '../Button/Button';
+import { Button } from '@/shared/ui';
 
 import styles from './Modal.module.less';
 

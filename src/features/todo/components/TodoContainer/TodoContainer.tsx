@@ -1,4 +1,4 @@
-import { Button } from '@/shared/ui/Button/Button';
+import { Button } from '@/shared/ui';
 
 import { useTodoModal } from '../../hooks/useTodoModal';
 import { useTodos } from '../../hooks/useTodos';
