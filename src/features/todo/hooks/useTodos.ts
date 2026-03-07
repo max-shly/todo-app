@@ -69,13 +69,13 @@ export function useTodos() {
   }, []);
 
   const toggleTodoStatus = useCallback(
-    (todo: Todo) => {
+    async (todo: Todo) => {
       const toggled = {
         ...todo,
         status: (todo.status === 'complete' ? 'incomplete' : 'complete') as TodoStatus,
       };
 
-      updateTodo(toggled);
+      await updateTodo(toggled);
     },
     [updateTodo]
   );
