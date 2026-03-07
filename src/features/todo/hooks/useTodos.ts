@@ -110,7 +110,7 @@ export function useTodos() {
       return;
     }
 
-    dispatch({ type: 'SET_TODOS', payload: { todos: [] } });
+    dispatch({ type: 'SET_TODOS', payload: { todos: data } });
     toast.success('All todos deleted!');
   }, []);
 
