@@ -1,8 +1,19 @@
-import { type Todo, type ApiResponse } from '../types/index.ts';
+import { type Todo } from '../types/index.ts';
 
 const STORAGE_KEY = 'todoList';
 
+export interface ApiResponse<T> {
+  data: T | null;
+  error: string | null;
+}
+
 class TodoApi {
+  protected generateRandomError() {
+    if (Math.random() < 0.2) {
+      throw new Error();
+    }
+  }
+
   protected readFromStorage(): Todo[] {
     try {
       const localTodoList = localStorage.getItem(STORAGE_KEY);
@@ -21,6 +32,8 @@ class TodoApi {
     operation: (todos: Todo[]) => { newTodos: Todo[]; result: R }
   ): Promise<ApiResponse<R>> {
     try {
+      this.generateRandomError();
+
       const todos = this.readFromStorage();
 
       const { newTodos, result } = operation(todos);
@@ -35,6 +48,8 @@ class TodoApi {
 
   async fetchTodos(): Promise<ApiResponse<Todo[]>> {
     try {
+      this.generateRandomError();
+
       const todos = this.readFromStorage();
       return { data: todos, error: null };
     } catch (error) {
