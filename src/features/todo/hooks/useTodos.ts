@@ -1,72 +1,41 @@
-import { useReducer, useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 
-import toast from 'react-hot-toast';
+import { useAppSelector, useAppDispatch } from '@/app/hooks/hooks';
 
-import { todoApi } from '../api/todoApi';
-import { todosReducer, initialState } from '../store/todosReducer';
+import {
+  fetchTodosThunk,
+  addTodoThunk,
+  updateTodoThunk,
+  deleteTodoThunk,
+  deleteAllTodosThunk,
+  deleteCompletedTodosThunk,
+} from '../store/todosSlice';
 
 import type { Todo, TodoStatus } from '../types';
 
 export function useTodos() {
-  const [state, dispatch] = useReducer(todosReducer, initialState);
+  const dispatch = useAppDispatch();
+  const todos = useAppSelector((state) => state.todos.todos);
+  const isLoading = useAppSelector((state) => state.todos.isLoading);
+  const error = useAppSelector((state) => state.todos.error);
 
   useEffect(() => {
-    const loadTodos = async () => {
-      dispatch({ type: 'FETCH_START' });
+    dispatch(fetchTodosThunk());
+  }, [dispatch]);
 
-      const { data, error } = await todoApi.fetchTodos();
+  const addTodo = useCallback(
+    async (todo: Omit<Todo, 'id' | 'createdAt' | 'updatedAt'>) => {
+      await dispatch(addTodoThunk(todo)).unwrap();
+    },
+    [dispatch]
+  );
 
-      if (error) {
-        dispatch({ type: 'FETCH_ERROR', payload: { error } });
-        toast.error(error);
-        return;
-      }
-
-      if (!data) {
-        dispatch({ type: 'FETCH_ERROR', payload: { error: 'No data' } });
-        toast.error('No data returned');
-        return;
-      }
-
-      dispatch({ type: 'FETCH_SUCCESS', payload: { todos: data } });
-    };
-
-    loadTodos();
-  }, []);
-
-  const addTodo = useCallback(async (todo: Omit<Todo, 'id' | 'createdAt' | 'updatedAt'>) => {
-    const { data, error } = await todoApi.createTodo(todo);
-
-    if (error) {
-      toast.error(error);
-      return;
-    }
-
-    if (!data) {
-      toast.error('No data returned');
-      return;
-    }
-
-    dispatch({ type: 'ADD_TODO', payload: { todo: data } });
-    toast.success('Todo added!');
-  }, []);
-
-  const updateTodo = useCallback(async (todo: Todo) => {
-    const { data, error } = await todoApi.updateTodo(todo.id, todo);
-
-    if (error) {
-      toast.error(error);
-      return;
-    }
-
-    if (!data) {
-      toast.error('No data returned');
-      return;
-    }
-
-    dispatch({ type: 'UPDATE_TODO', payload: { todo: data } });
-    toast.success('Todo updated!');
-  }, []);
+  const updateTodo = useCallback(
+    async (todo: Todo) => {
+      await dispatch(updateTodoThunk(todo)).unwrap();
+    },
+    [dispatch]
+  );
 
   const toggleTodoStatus = useCallback(
     async (todo: Todo) => {
@@ -80,59 +49,25 @@ export function useTodos() {
     [updateTodo]
   );
 
-  const deleteTodo = useCallback(async (id: string) => {
-    const { data, error } = await todoApi.deleteTodo(id);
-
-    if (error) {
-      toast.error(error);
-      return;
-    }
-
-    if (!data) {
-      toast.error('No data returned');
-      return;
-    }
-
-    dispatch({ type: 'DELETE_TODO', payload: { id } });
-    toast.success('Todo deleted!');
-  }, []);
+  const deleteTodo = useCallback(
+    async (id: string) => {
+      await dispatch(deleteTodoThunk(id)).unwrap();
+    },
+    [dispatch]
+  );
 
   const deleteAllTodos = useCallback(async () => {
-    const { data, error } = await todoApi.deleteAllTodos();
-
-    if (error) {
-      toast.error(error);
-      return;
-    }
-
-    if (!data) {
-      toast.error('No data returned');
-      return;
-    }
-
-    dispatch({ type: 'SET_TODOS', payload: { todos: data } });
-    toast.success('All todos deleted!');
-  }, []);
+    await dispatch(deleteAllTodosThunk()).unwrap();
+  }, [dispatch]);
 
   const deleteCompletedTodos = useCallback(async () => {
-    const { data, error } = await todoApi.deleteCompletedTodos();
-
-    if (error) {
-      toast.error(error);
-      return;
-    }
-
-    if (!data) {
-      toast.error('No data returned');
-      return;
-    }
-
-    dispatch({ type: 'SET_TODOS', payload: { todos: data } });
-    toast.success('Completed todos deleted');
-  }, []);
+    await dispatch(deleteCompletedTodosThunk()).unwrap();
+  }, [dispatch]);
 
   return {
-    state,
+    todos,
+    isLoading,
+    error,
     addTodo,
     updateTodo,
     toggleTodoStatus,
