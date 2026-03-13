@@ -1,4 +1,4 @@
-import { TodoItem } from '../TodoItem/TodoItem';
+import { TodoItem } from '..';
 
 import styles from './TodoList.module.less';
 

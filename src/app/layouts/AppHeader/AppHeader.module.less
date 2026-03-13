@@ -3,9 +3,38 @@
 
   border-bottom: 1px solid black;
 
-  color: var(--black-1);
+  color: var(--dark-color);
 
-  font-size: 22px;
-  font-weight: 600;
-  text-transform: uppercase;
+  a {
+    color: var(--dark-color);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--black-color);
+    }
+  }
+
+  .headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+
+    .logo {
+      font-size: 22px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      .active {
+        color: var(--primary-color);
+      }
+    }
+  }
 }

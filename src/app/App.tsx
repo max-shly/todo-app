@@ -1,17 +1,23 @@
 import { Toaster } from 'react-hot-toast';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import { AppHeader } from './layouts/AppHeader/AppHeader';
-import { AppMain } from './layouts/AppMain/AppMain';
 import './styles/global.less';
-import styles from './styles/prototype.module.less';
+
+import { TodoPage, CollectionsPage } from '@/pages';
+
+import { Prototype } from './layouts/Prototype/Prototype';
 
 function App() {
   return (
     <>
-      <div className={styles.prototype}>
-        <AppHeader />
-        <AppMain />
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Prototype />}>
+            <Route index element={<TodoPage />} />
+            <Route path="collections" element={<CollectionsPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
       <Toaster
         position="bottom-right"
         toastOptions={{
