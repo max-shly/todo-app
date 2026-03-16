@@ -108,9 +108,13 @@ class TodoApi {
 
   async deleteCompletedTodos(): Promise<ApiResponse<Todo[]>> {
     return this.executeWithStorage((todos) => {
-      const newTodos = todos.filter((todo) => todo.status !== 'complete');
+      const completedIds = todos
+        .filter((todo) => todo.status === 'complete')
+        .map((todo) => todo.id);
 
-      return { newTodos, result: newTodos };
+      const newTodos = todos.filter((t) => t.status !== 'complete');
+
+      return { newTodos, result: completedIds };
     });
   }
 }
