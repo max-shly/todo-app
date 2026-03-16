@@ -1,6 +1,7 @@
 import { type Middleware, configureStore, isRejected } from '@reduxjs/toolkit';
 import toast from 'react-hot-toast';
 
+import collectionsReducer from '@/features/collection/store/collectionsSlice';
 import todosReducer from '@/features/todo/store/todosSlice';
 
 const errorMiddleware: Middleware = () => (next) => (action) => {
@@ -24,6 +25,7 @@ const errorMiddleware: Middleware = () => (next) => (action) => {
 export const store = configureStore({
   reducer: {
     todos: todosReducer,
+    collections: collectionsReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(errorMiddleware),
 });
