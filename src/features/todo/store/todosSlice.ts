@@ -98,11 +98,11 @@ export const todosSlice = createSlice({
       .addCase(deleteTodoThunk.fulfilled, (state, action) => {
         state.todos = state.todos.filter((todo) => todo.id !== action.payload);
       })
-      .addCase(deleteAllTodosThunk.fulfilled, (state) => {
-        state.todos = [];
+      .addCase(deleteAllTodosThunk.fulfilled, (state, action) => {
+        state.todos = action.payload;
       })
       .addCase(deleteCompletedTodosThunk.fulfilled, (state, action) => {
-        state.todos = state.todos.filter((todo) => !action.payload.includes(todo.id));
+        state.todos = action.payload;
       })
       .addMatcher(
         (action): action is { type: string; payload: string } =>
