@@ -1,9 +1,8 @@
 import { BaseApi } from '@/shared/lib/baseApi.ts';
+import { getAppData } from '@/shared/lib/storage.ts';
 import type { ApiResponse } from '@/shared/types/index.ts';
 
 import { type Todo } from '../types/index.ts';
-
-const STORAGE_KEY = 'todoList';
 
 class TodoApi extends BaseApi {
   protected generateRandomError() {
@@ -12,44 +11,12 @@ class TodoApi extends BaseApi {
     }
   }
 
-  protected readFromStorage(): Todo[] {
-    try {
-      const localTodoList = localStorage.getItem(STORAGE_KEY);
-      return localTodoList ? JSON.parse(localTodoList) : [];
-    } catch {
-      console.error("Couldn't parse todos from localStorage");
-      return [];
-    }
-  }
-
-  protected writeToStorage(todos: Todo[]): void {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
-  }
-
-  protected async executeWithStorage<R>(
-    operation: (todos: Todo[]) => { newTodos: Todo[]; result: R }
-  ): Promise<ApiResponse<R>> {
-    try {
-      this.generateRandomError();
-
-      const todos = this.readFromStorage();
-
-      const { newTodos, result } = operation(todos);
-
-      this.writeToStorage(newTodos);
-
-      return { data: result, error: null };
-    } catch (error) {
-      return { data: null, error: `Operation failed: ${error}` };
-    }
-  }
-
   async fetchTodos(): Promise<ApiResponse<Todo[]>> {
     try {
       this.generateRandomError();
 
-      const todos = this.readFromStorage();
-      return { data: todos, error: null };
+      const appData = getAppData();
+      return { data: appData.todos, error: null };
     } catch (error) {
       return { data: null, error: `Failed to fetch todos: ${error}` };
     }
