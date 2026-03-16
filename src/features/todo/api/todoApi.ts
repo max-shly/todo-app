@@ -1,13 +1,11 @@
+import { BaseApi } from '@/shared/lib/baseApi.ts';
+import type { ApiResponse } from '@/shared/types/index.ts';
+
 import { type Todo } from '../types/index.ts';
 
 const STORAGE_KEY = 'todoList';
 
-export interface ApiResponse<T> {
-  data: T | null;
-  error: string | null;
-}
-
-class TodoApi {
+class TodoApi extends BaseApi {
   protected generateRandomError() {
     if (Math.random() < 0.2) {
       throw new Error();
@@ -60,61 +58,61 @@ class TodoApi {
   async createTodo(
     todoData: Omit<Todo, 'id' | 'createdAt' | 'updatedAt'>
   ): Promise<ApiResponse<Todo>> {
-    return this.executeWithStorage((todos) => {
+    return this.executeWithAppData((appData) => {
       const newTodo: Todo = {
         id: crypto.randomUUID(),
         ...todoData,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
-      return { newTodos: [...todos, newTodo], result: newTodo };
+      return { newAppData: { ...appData, todos: [...appData.todos, newTodo] }, result: newTodo };
     });
   }
 
   async updateTodo(id: string, todoUpdates: Partial<Todo>): Promise<ApiResponse<Todo>> {
-    return this.executeWithStorage((todos) => {
-      const index = todos.findIndex((todo) => todo.id === id);
+    return this.executeWithAppData((appData) => {
+      const index = appData.todos.findIndex((todo) => todo.id === id);
       if (index === -1) throw new Error('Todo not found');
 
       const updated = {
-        ...todos[index],
+        ...appData.todos[index],
         ...todoUpdates,
         updatedAt: new Date().toISOString(),
       };
 
-      const newTodos = [...todos];
+      const newTodos = [...appData.todos];
       newTodos[index] = updated;
 
-      return { newTodos, result: updated };
+      return { newAppData: { ...appData, todos: newTodos }, result: updated };
     });
   }
 
   async deleteTodo(id: string): Promise<ApiResponse<string>> {
-    return this.executeWithStorage((todos) => {
-      const index = todos.findIndex((todo) => todo.id === id);
+    return this.executeWithAppData((appData) => {
+      const index = appData.todos.findIndex((todo) => todo.id === id);
       if (index === -1) throw new Error('Todo not found');
 
-      const newTodos = todos.filter((todo) => todo.id !== id);
+      const newTodos = appData.todos.filter((todo) => todo.id !== id);
 
-      return { newTodos, result: id };
+      return { newAppData: { ...appData, todos: newTodos }, result: id };
     });
   }
 
   async deleteAllTodos(): Promise<ApiResponse<Todo[]>> {
-    return this.executeWithStorage(() => {
-      return { newTodos: [], result: [] };
+    return this.executeWithAppData((appData) => {
+      return { newAppData: { ...appData, todos: [] }, result: [] };
     });
   }
 
-  async deleteCompletedTodos(): Promise<ApiResponse<Todo[]>> {
-    return this.executeWithStorage((todos) => {
-      const completedIds = todos
+  async deleteCompletedTodos(): Promise<ApiResponse<string[]>> {
+    return this.executeWithAppData((appData) => {
+      const completedIds = appData.todos
         .filter((todo) => todo.status === 'complete')
         .map((todo) => todo.id);
 
-      const newTodos = todos.filter((t) => t.status !== 'complete');
+      const newTodos = appData.todos.filter((todo) => todo.status !== 'complete');
 
-      return { newTodos, result: completedIds };
+      return { newAppData: { ...appData, todos: newTodos }, result: completedIds };
     });
   }
 }
