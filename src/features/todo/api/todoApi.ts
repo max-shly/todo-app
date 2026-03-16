@@ -106,11 +106,15 @@ class TodoApi {
     });
   }
 
-  async deleteCompletedTodos(): Promise<ApiResponse<Todo[]>> {
+  async deleteCompletedTodos(): Promise<ApiResponse<string[]>> {
     return this.executeWithStorage((todos) => {
+      const completedIds = todos
+        .filter((todo) => todo.status === 'complete')
+        .map((todo) => todo.id);
+
       const newTodos = todos.filter((todo) => todo.status !== 'complete');
 
-      return { newTodos, result: newTodos };
+      return { newTodos, result: completedIds };
     });
   }
 }
